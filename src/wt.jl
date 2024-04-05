@@ -1,14 +1,13 @@
 using CSV, DataFrames, Dates
 
-# data_in_question = "hourly_sea_level"
+data_in_question = "moonquakes_all_stations"
+variable = "amplitude"
 
-function read_data(data_in_question::String)
-    path = "./data/"
-    filepath = path * data_in_question * ".csv"
-    df = CSV.read(filepath, DataFrame);
+path = "./data/"
+filepath = "./data/" * data_in_question * ".csv"
+df = CSV.read(filepath, DataFrame);
 
-    return df
-end
+mkpath("./results/$(data_in_question)/wt/")
 
 function waiting_times(df, delta, datetime, variable)
     wtid = []
@@ -17,7 +16,7 @@ function waiting_times(df, delta, datetime, variable)
         for (j,x) in enumerate(df[i+1:end, variable])
             if x >= (k+delta)
                 second_event = df[!,datetime][i+j]
-                push!(wtid, Int(Dates.value(second_event - first_event) / 3600000) )
+                push!(wtid, trunc(Int, Dates.value(second_event - first_event) / 150000) )
                 break
             end
         end
@@ -26,27 +25,11 @@ function waiting_times(df, delta, datetime, variable)
 end
 
 
-data_in_question = "hourly_wind_speed"
-
-df = read_data(data_in_question)
-
-# df = df[(df.datetime .< DateTime(1939,01,01,0,0,0)),:]
-
-delta = parse(Int64, ARGS[1])
-# delta = 100
+# deltas = 0.1:0.1:1.5
+deltas = 0.1:0.1:2.0
 datetime = "datetime"
-variable = "wind_speed"
-
-
-start_year = Dates.format(minimum(df.datetime), "yyyy")
-end_year = Dates.format(maximum(df.datetime), "yyyy")
-period =  start_year * "_" * end_year
-
-mkpath("./$(variable)/wt_$(period)/")
-
-wt = waiting_times(df, delta, datetime, variable)
-
-wt_dataframe = DataFrame([wt], ["wt"])
-CSV.write("./$(variable)/wt_$(period)/wt_$(variable)_delta_$(delta).csv", wt_dataframe, delim=",")
-
-
+for delta in deltas
+    wt = waiting_times(df, delta, datetime, variable)
+    wt_dataframe = DataFrame([wt], ["wt"])
+    CSV.write("./results/$(data_in_question)/wt/wt_$(data_in_question)_delta_$(delta).csv", wt_dataframe, delim=",")
+end
