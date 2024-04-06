@@ -11,7 +11,13 @@ fit_powerlaw = pyeval("""lambda fit: lambda a, b, c: fit(a, b, c)""")
 
 
 
-data_in_question = "moonquakes_all_stations"
+# data_in_question = "moonquakes_all_stations"
+# deltas = [0.1, 1.2, 2.0]
+# day_hour = "days"
+
+data_in_question = "marsquakes_mw"
+deltas = [1.4, 1.5, 1.6]
+day_hour = "hours"
 
 
 ################################################################################################################################################################
@@ -19,7 +25,7 @@ data_in_question = "moonquakes_all_stations"
 # BEST FITS
 set_theme!(Theme(fonts=(; regular="CMU Serif")))
 fig = Figure(size = (800, 700), font= "CMU Serif") 
-ax1 = Axis(fig[1, 1], xlabel = L"k\, \mathrm{[days]}", ylabel = L"P_k", xscale=log10, yscale=log10, ylabelsize = 26,
+ax1 = Axis(fig[1, 1], xlabel = L"k\, \mathrm{[%$(day_hour)]}", ylabel = L"P_k", xscale=log10, yscale=log10, ylabelsize = 26,
     xlabelsize = 22, xgridstyle = :dash, ygridstyle = :dash, xtickalign = 1,
     xticksize = 5, ytickalign = 1, yticksize = 5 , xlabelpadding = 10, ylabelpadding = 10,xticklabelsize=22, yticklabelsize=22)
 
@@ -36,7 +42,7 @@ sc1 = Array{Any,1}(undef,3)
 sc12 = Array{Any,1}(undef,3)
 
 multiplier = [0.1, 1.0, 10]
-deltas = [0.1, 1.2, 2.0]
+
 for i in eachindex(deltas)
     
     delta = deltas[i]
@@ -93,7 +99,7 @@ axislegend(ax1, position = :rb, backgroundcolor = (:grey90, 0.25), labelsize=18)
 # axislegend(ax1, [sc12[1]], [L"\text{historical waiting times}"], position = :lc, backgroundcolor = (:grey90, 0.25), labelsize=18, titlesize=18);
 
 
-ylims!(ax1, 10^(-5), 10^(0.2))
+ylims!(ax1, 10^(-4), 10^(0.2))
 
 text!(ax2, "only fitted data\nCCDFs", space = :relative, position = Point2f(0.03, 0.03))
 

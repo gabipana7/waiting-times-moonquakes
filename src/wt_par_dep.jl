@@ -2,7 +2,9 @@ using CSV, DataFrames, Dates
 using CairoMakie
 
 
-data_in_question = "moonquakes_all_stations"
+# data_in_question = "moonquakes_all_stations"
+
+data_in_question = "marsquakes_mw"
 
 results = CSV.read("./results/$(data_in_question)/powerlaw/$(data_in_question).csv", DataFrame)
 

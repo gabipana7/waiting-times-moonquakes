@@ -20,10 +20,15 @@ function rescale_data(data)
 end
 
 
-datetime = "datetime"
-data_in_question = "moonquakes_all_stations"
+# datetime = "datetime"
+# data_in_question = "moonquakes_all_stations"
+# deltas = [0.5, 1.5, 3.0, 5.0]
+# day_hour = "days"
 
-deltas = [0.5, 1.5, 3.0, 5.0]
+datetime = "datetime"
+data_in_question = "marsquakes_mw"
+deltas = [1.0, 1.5, 1.7, 2.0]
+day_hour = "hours"
 
 
 set_theme!(Theme(fonts=(; regular="CMU Serif")))
@@ -35,7 +40,7 @@ line_colors=[:midnightblue, :green, :darkred, :purple]
 ########################################### ALL
 # CCDF of all data scattered 
 fig = Figure(resolution = (800, 700), font= "CMU Serif") 
-ax1 = Axis(fig[1,1], xlabel = L"k\, \mathrm{[days]}", ylabel = L"P_k", ylabelsize = 28, xscale=log10, yscale=log10,   
+ax1 = Axis(fig[1,1], xlabel = L"k\, \mathrm{[%$(day_hour)]}", ylabel = L"P_k", ylabelsize = 28, xscale=log10, yscale=log10,   
     xlabelsize = 28, xgridstyle = :dash, ygridstyle = :dash, xtickalign = 1,
     xticksize = 5, ytickalign = 1, yticksize = 5 , xlabelpadding = 10, ylabelpadding = 10, xticklabelsize=22, yticklabelsize=22)
     

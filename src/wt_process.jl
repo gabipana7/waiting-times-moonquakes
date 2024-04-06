@@ -7,16 +7,23 @@ using CairoMakie
 so = pyimport("scipy.optimize")
 
 
-data_in_question = "moonquakes_all_stations"
+# data_in_question = "moonquakes_all_stations"
+# deltas = collect(0.1:0.1:1.5)
+# deltas = collect(1.5:0.5:5.0)
+# deltas = collect(0.1:0.1:2.0)
+
+
+data_in_question = "marsquakes_mw"
+variable = "mw"
+deltas = 1.0:0.1:3.0
+
 
 wt_alpha = []
 wt_sigma = []
 wt_xmin = []
 wt_KS = []
 
-# deltas = collect(0.1:0.1:1.5)
-# deltas = collect(1.5:0.5:5.0)
-deltas = collect(0.1:0.1:2.0)
+
 for delta in deltas
 
     wt_df = CSV.read("./results/$(data_in_question)/wt/wt_$(data_in_question)_delta_$(delta).csv", DataFrame)

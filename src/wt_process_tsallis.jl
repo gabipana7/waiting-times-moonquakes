@@ -6,13 +6,19 @@ using CairoMakie
 so = pyimport("scipy.optimize")
 
 
-data_in_question = "moonquakes_all_stations"
-variable = "amplitude"
+# data_in_question = "moonquakes_all_stations"
+# variable = "amplitude"
+# deltas = collect(0.5:0.5:5)
 
-deltas = collect(0.5:0.5:5)
+
+data_in_question = "marsquakes_mw"
+variable = "mw"
+# deltas = 0.1:0.1:1.5
+deltas = 1.0:0.1:3.0
+
 for delta in deltas
 
-    wt_df = CSV.read("./results/$(data_in_question)/wt_$(data_in_question)_delta_$(delta).csv", DataFrame)
+    wt_df = CSV.read("./results/$(data_in_question)/wt/wt_$(data_in_question)_delta_$(delta).csv", DataFrame)
     wt = wt_df[!,:wt]
 
     mkpath("./results/$(data_in_question)/tsallis/")

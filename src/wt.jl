@@ -1,7 +1,14 @@
 using CSV, DataFrames, Dates
 
-data_in_question = "moonquakes_all_stations"
-variable = "amplitude"
+# data_in_question = "moonquakes_all_stations"
+# variable = "amplitude"
+# # deltas = 0.1:0.1:1.5
+# deltas = 0.1:0.1:2.0
+
+
+data_in_question = "marsquakes_mw"
+variable = "mw"
+deltas = 1.0:0.1:3.0
 
 path = "./data/"
 filepath = "./data/" * data_in_question * ".csv"
@@ -25,8 +32,7 @@ function waiting_times(df, delta, datetime, variable)
 end
 
 
-# deltas = 0.1:0.1:1.5
-deltas = 0.1:0.1:2.0
+
 datetime = "datetime"
 for delta in deltas
     wt = waiting_times(df, delta, datetime, variable)
